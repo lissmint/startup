@@ -1,16 +1,24 @@
-window.onscroll = function () {
-  let html = document.documentElement,
-    body = document.body,
-    nav = document.querySelector("header");
+const nav = document.querySelector("header");
+const main = document.querySelector("main");
 
-  if (html.scrollTop > 250 || body.scrollTop > 250) {
-    nav.classList.add("change");
-  } else {
-    nav.classList.remove("change");
-  }
+let options = {
+  root: null,
+  rootMargin: "-200px",
 };
 
-let burger = document.querySelector(".header__burger"),
+let observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) {
+      nav.classList.remove("change");
+    } else {
+      nav.classList.add("change");
+    }
+  });
+}, options);
+
+observer.observe(main);
+
+const burger = document.querySelector(".header__burger"),
   menu = document.querySelector(".header__menu"),
   menuLinks = document.getElementsByClassName("header__link");
 
